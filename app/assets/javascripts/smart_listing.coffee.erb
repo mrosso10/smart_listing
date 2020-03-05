@@ -169,6 +169,12 @@ class window.SmartListing
   
   # Trigger AJAX request to reload the list
   reload: () =>
+    unless @container.data('params')
+      nombre = this.name + "_smart_listing[_]"
+      parametros = {}
+      parametros['utf8'] = "✓";
+      parametros[nombre] = "1";
+      @container.data('params', parametros)
     $.rails.handleRemote(@container)
   
   params: (value) =>
