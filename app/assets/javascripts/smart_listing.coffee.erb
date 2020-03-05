@@ -392,7 +392,8 @@ $.fn.smart_listing_controls = () ->
       else
         prms[field.name] = field.value
 
-    prms = $.extend(smart_listing.params(), prms)
+    # rompe el select multiple
+    # prms = $.extend(smart_listing.params(), prms)
     smart_listing.params(prms)
 
     smart_listing.fadeLoading()
