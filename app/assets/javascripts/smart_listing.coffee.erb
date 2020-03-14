@@ -423,13 +423,15 @@ $.fn.smart_listing_controls = () ->
       unless $(this).data(SmartListing.config.data_attribute("observed")) # do not submit controls form when changed field is observed (observing submits form by itself)
         reload(controls)
 
-    $.fn.smart_listing_controls.filter(controls.find(SmartListing.config.class_name("filtering")))
+    controls.find(SmartListing.config.class_name("filtering")).each () ->
+      $.fn.smart_listing_controls.filter($(this))
 
 $.fn.smart_listing_controls.filter = (filter) ->
   form = filter.closest("form")
-  button = form.find(SmartListing.config.selector("filtering_button"))
-  icon = form.find(SmartListing.config.selector("filtering_icon"))
-  field = form.find(SmartListing.config.selector("filtering_input"))
+  button = filter.find(SmartListing.config.selector("filtering_button"))
+  icon = filter.find(SmartListing.config.selector("filtering_icon"))
+  # field = filter.find(SmartListing.config.selector("filtering_input"))
+  field = filter.find('input')
 
   $.fn.smart_listing.observeField(field,
     onFilled: ->
