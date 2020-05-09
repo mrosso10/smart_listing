@@ -286,7 +286,19 @@ class window.SmartListing
     @container.data(SmartListing.config.data_attribute("max_count"), data[SmartListing.config.data_attribute("max_count")])
     @container.data(SmartListing.config.data_attribute("item_count"), data[SmartListing.config.data_attribute("item_count")])
 
-    @content.html(content)
+    if typeof $.fn.responsiveTable == "function" && @content.find('.table-responsive').data('pattern')
+
+      # si es una responsive table (rwd-table-patterns)
+      # entonces updateo sólo el tbody y el paginador y llamo a .responsiveTable('update')
+
+      content = "<div>"+content+"</div>"; # esto es porque los find no funcionan bien si no es un unico bloque
+      @content.find('tbody').html($(content).find('tbody').html() || '')
+      @content.find('.pagination').html($(content).find('.pagination').html() || '')
+      @content.find('.pagination-per-page').html($(content).find('.pagination-per-page').html() || '')
+      $('.table-responsive').responsiveTable('update')
+    else
+      @content.html(content)
+
 
     @refresh()
     @fadeLoaded()
