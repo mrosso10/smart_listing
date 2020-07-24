@@ -325,20 +325,25 @@ $.fn.smart_listing.observeField = (field, opts = {}) ->
   options = $.extend(options, opts)
  
   keyChange = () ->
-    if field.val().length > 0
+    if field.attr('type') == 'checkbox'
+      current_val = if field.is(':checked') then '1' else '0'
+    else
+      current_val = field.val()
+ 
+    if current_val.length > 0
       options.onFilled()
     else
       options.onEmpty()
  
-    if field.val() == last_value # && field.val().length != 0
+    if current_val == last_value # && current_val.length != 0
       return
-    last_value = field.val()
+    last_value = current_val
  
     options.onChange()
  
   field.data(SmartListing.config.data_attribute("observed"), true)
  
-  field.bind "keydown", (e) ->
+  field.bind "keydown change", (e) ->
     if(key_timeout)
       clearTimeout(key_timeout)
  
