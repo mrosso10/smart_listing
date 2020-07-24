@@ -316,35 +316,35 @@ $.fn.smart_listing = () ->
     map
 
 $.fn.smart_listing.observeField = (field, opts = {}) ->
-   key_timeout = null
-   last_value = null
-   options =
-     onFilled: () ->
-     onEmpty: () ->
-     onChange: () ->
-   options = $.extend(options, opts)
+  key_timeout = null
+  last_value = null
+  options =
+    onFilled: () ->
+    onEmpty: () ->
+    onChange: () ->
+  options = $.extend(options, opts)
  
-   keyChange = () ->
-     if field.val().length > 0
-       options.onFilled()
-     else
-       options.onEmpty()
-
-     if field.val() == last_value && field.val().length != 0
-       return
-     lastValue = field.val()
+  keyChange = () ->
+    if field.val().length > 0
+      options.onFilled()
+    else
+      options.onEmpty()
  
-     options.onChange()
+    if field.val() == last_value # && field.val().length != 0
+      return
+    last_value = field.val()
  
-   field.data(SmartListing.config.data_attribute("observed"), true)
+    options.onChange()
  
-   field.bind "keydown", (e) ->
-     if(key_timeout)
-       clearTimeout(key_timeout)
+  field.data(SmartListing.config.data_attribute("observed"), true)
  
-     key_timeout = setTimeout(->
-       keyChange()
-     , 400)
+  field.bind "keydown", (e) ->
+    if(key_timeout)
+      clearTimeout(key_timeout)
+ 
+    key_timeout = setTimeout(->
+      keyChange()
+    , 400)
 
 $.fn.smart_listing.showPopover = (elem, body) ->
   elem.popover(SmartListing.config.bootstrap_commands("popover_destroy"))
