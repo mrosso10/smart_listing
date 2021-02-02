@@ -40,6 +40,10 @@ module SmartListing
         @smart_listing_name, @smart_listing, @template, @options, @proc = smart_listing_name, smart_listing, template, options, proc
       end
 
+      def instancia
+        @smart_listing
+      end
+
       def name
         @smart_listing_name
       end
